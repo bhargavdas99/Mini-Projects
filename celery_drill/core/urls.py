@@ -2,6 +2,7 @@ from django.urls import path
 from django.http import JsonResponse
 from core.tasks import heavy_task, quick_task
 
+
 def trigger_workload(request):
     # Queue 4 heavy tasks, followed by 4 quick tasks
     for i in range(4):
@@ -10,6 +11,7 @@ def trigger_workload(request):
         quick_task.delay(i)
     return JsonResponse({"status": "Batch submitted to RabbitMQ"})
 
+
 urlpatterns = [
-    path('trigger/', trigger_workload),
+    path("trigger/", trigger_workload),
 ]
