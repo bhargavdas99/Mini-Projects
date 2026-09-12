@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672" # RabbitMQ Management Web UI
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+
+  # Worker 1: Greedily pre-fetches tasks
+  worker-1:
+    build: .
+    command: celery -A core worker -l info -n worker1@%h --concurrency=1
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+
+  # Worker 2: Standing by
+  worker-2:
+    build: .
+    command: celery -A core worker -l info -n worker2@%h --concurrency=1
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq

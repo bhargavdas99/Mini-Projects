@@ -1,6 +1,33 @@
-.venv/
+# Byte-compiled / optimized files
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Virtual environments
 .venv/
+venv/
+ENV/
+
+# Django local database & static
 *.sqlite3
-__pycache__/
+db.sqlite3
+local_settings.py
+
+# Celery process & schedule state
+celerybeat-schedule
+celerybeat.pid
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS artifacts
+.DS_Store
+Thumbs.db
