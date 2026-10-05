@@ -58,7 +58,7 @@ channel.queue_bind(
 
 print("[✓] RabbitMQ exchanges, queues, and DLX routing configured successfully.")
 
-# 4. Produce Two Messages
+# 4. Produce Two Messages [PRODUCER]
 tasks = [
     {"order_id": 101, "customer_id": "cust_A", "amount": 250, "status": "VALID"},
     {"order_id": 102, "customer_id": "cust_B", "amount": -50, "status": "INVALID_AMOUNT"},
@@ -77,7 +77,7 @@ for task in tasks:
     )
     print(f"[>] Published task: {payload}")
 
-# 5. Worker Simulation
+# 5. Worker Simulation  [CONSUMER]
 print("\n[*] Worker consuming from 'orders.process.queue'...\n")
 
 def process_order(ch, method, properties, body):
